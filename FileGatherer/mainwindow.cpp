@@ -14,9 +14,12 @@
 #include <QComboBox>
 #include <QDebug>
 
+#include "cdialogmanagefilelist.h"
+#include "cdialogfilterfiletable.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),gatherFileNames(nullptr),tableModel(nullptr)
+    ui(new Ui::MainWindow),gatherFileNames(nullptr),tableModel(nullptr),dialogManageFileList(nullptr),dialogFilterFileTable(nullptr)
 {
     ui->setupUi(this);
     gatherFileNames=new CGatherFileNames(this);
@@ -27,6 +30,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableViewFiles->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableViewFiles->setModel(tableModel);
     initCombobox();
+
+    dialogManageFileList=new CDialogManageFileList(this);
+    connect(dialogManageFileList,SIGNAL(filesTableAltered()),this,SLOT(filesTableAltered()));
+
+    dialogFilterFileTable=new CDialogFilterFileTable(this);
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +90,7 @@ void MainWindow::on_actionGather_from_Directory_triggered()
 
 void MainWindow::initCombobox()
 {
+    ui->comboBoxTables->clear();
     //init comboBox with tableLabel table
     QSqlDatabase db=QSqlDatabase::database("files",true);
     if(!db.isOpen())
@@ -117,4 +126,22 @@ void MainWindow::on_comboBoxTables_activated(int index)
 {
     tableModel->setTable("fn"+ui->comboBoxTables->itemData(index).toString());
     tableModel->select();
+}
+
+void MainWindow::on_actionFile_Lists_triggered()
+{
+    Q_ASSERT(dialogManageFileList);
+    dialogManageFileList->exec();
+}
+
+void MainWindow::filesTableAltered()
+{
+    initCombobox();
+}
+
+void MainWindow::on_pushButtonFilter_clicked()
+{
+    //open current file table in extra dialog
+    dialogFilterFileTable->setTableId(ui->comboBoxTables->currentData().toInt());
+    dialogFilterFileTable->exec();
 }

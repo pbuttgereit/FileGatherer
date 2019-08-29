@@ -132,7 +132,7 @@ void CGatherFileNames::getAllFilesInDirectoryRecursively()
                        .arg(fi.filePath())
                        .arg(fi.fileTime(QFileDevice::FileModificationTime).toString("yyyy-MM-dd hh:mm:ss"))
                        .arg(QString::fromUtf8(hashme.result().toHex()))
-                       .arg(fi.suffix())
+                       .arg(fi.suffix().toLower())
                        .arg(fileRevision(fi.fileName()))
                        )
                 )
@@ -163,6 +163,7 @@ QString CGatherFileNames::fileRevision(const QString &fn)
         }
     }
 
+    /*
     //unify revision string
     qDebug() << "-------------";
     qDebug() << revision;
@@ -174,7 +175,7 @@ QString CGatherFileNames::fileRevision(const QString &fn)
     qDebug() << revision;
     revision=revision.remove(regexRevisionClean4); //remove leading/trailing dot
     qDebug() << revision;
-
+    */
     return revision;
 }
 

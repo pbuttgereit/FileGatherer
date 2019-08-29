@@ -25,15 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        cdialogfilterfiletable.cpp \
+        cdialogmanagefilelist.cpp \
         cgatherfilenames.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        cdialogfilterfiletable.h \
+        cdialogmanagefilelist.h \
         cgatherfilenames.h \
         mainwindow.h
 
 FORMS += \
+        cdialogfilterfiletable.ui \
+        cdialogmanagefilelist.ui \
         mainwindow.ui
 
 # Default rules for deployment.

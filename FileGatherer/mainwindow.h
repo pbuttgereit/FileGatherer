@@ -10,6 +10,8 @@ class MainWindow;
 
 class CGatherFileNames;
 class QSqlTableModel;
+class CDialogManageFileList;
+class CDialogFilterFileTable;
 
 class MainWindow : public QMainWindow
 {
@@ -27,11 +29,19 @@ private slots:
 
     void on_comboBoxTables_activated(int index);
 
+    void on_actionFile_Lists_triggered();
+
+    void filesTableAltered();
+
+    void on_pushButtonFilter_clicked();
+
 private:
     void initCombobox();
     Ui::MainWindow *ui;
     CGatherFileNames *gatherFileNames;
     QSqlTableModel *tableModel;
+    CDialogManageFileList *dialogManageFileList;
+    CDialogFilterFileTable *dialogFilterFileTable;
 };
 
 #endif // MAINWINDOW_H

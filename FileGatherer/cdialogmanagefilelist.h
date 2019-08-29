@@ -15,6 +15,16 @@ public:
     explicit CDialogManageFileList(QWidget *parent = nullptr);
     ~CDialogManageFileList();
 
+public slots:
+    int exec();
+
+signals:
+    void filesTableDropped(int id);
+    void filesTableAltered();
+
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::CDialogManageFileList *ui;
 };
